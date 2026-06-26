@@ -107,6 +107,25 @@ function Pill({ children, active, onClick }) {
   );
 }
 
+function GridPill({ children, active, onClick }) {
+  return (
+    <button
+      onClick={onClick}
+      className="rounded-full text-sm font-medium transition-all flex items-center justify-center text-center"
+      style={{
+        background: active ? COLORS.kumkum : "transparent",
+        color: active ? COLORS.ivory : COLORS.ink,
+        border: `1px solid ${active ? COLORS.kumkum : "rgba(36,27,26,0.18)"}`,
+        minHeight: 92,
+        padding: "12px 10px",
+        lineHeight: 1.3,
+      }}
+    >
+      {children}
+    </button>
+  );
+}
+
 function Toast({ message, onClose }) {
   useEffect(() => {
     const t = setTimeout(onClose, 3200);
@@ -209,18 +228,18 @@ function CustomerHome({ beauticians, onBook, onSwitchRole }) {
       </div>
 
       {/* Filters */}
-      <div className="px-6 pt-4 pb-2 flex gap-2 overflow-x-auto" style={{ scrollbarWidth: "none" }}>
-        <Pill active={service === "all"} onClick={() => setService("all")}>All services</Pill>
+      <div className="px-6 pt-4 pb-2 grid grid-cols-3 gap-2">
+        <GridPill active={service === "all"} onClick={() => setService("all")}>All services</GridPill>
         {visibleServices.map((s) => (
-          <Pill key={s.id} active={service === s.id} onClick={() => setService(s.id)}>
+          <GridPill key={s.id} active={service === s.id} onClick={() => setService(s.id)}>
             {s.icon} {s.name}
-          </Pill>
+          </GridPill>
         ))}
       </div>
-      <div className="px-6 pt-2 pb-4 flex gap-2 overflow-x-auto">
-        <Pill active={area === "all"} onClick={() => setArea("all")}>📍 Anywhere in Amravati</Pill>
+      <div className="px-6 pt-2 pb-4 grid grid-cols-3 gap-2">
+        <GridPill active={area === "all"} onClick={() => setArea("all")}>📍 Anywhere in Amravati</GridPill>
         {AREAS.filter((a) => a !== "Other").map((a) => (
-          <Pill key={a} active={area === a} onClick={() => setArea(a)}>{a}</Pill>
+          <GridPill key={a} active={area === a} onClick={() => setArea(a)}>{a}</GridPill>
         ))}
       </div>
 
